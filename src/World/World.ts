@@ -5,6 +5,7 @@ import { createLights } from "./components/lights.ts";
 import { createRenderer } from "./systems/renderer.ts";
 import { Resizer } from "./systems/Resizer.ts";
 import { PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import createControls from "./systems/system.ts";
 
 // These variables are module-scoped: we cannot access them
 // from outside the module
@@ -19,10 +20,14 @@ class World {
     this.renderer = createRenderer();
     container.append(this.renderer.domElement);
 
+    const controls = createControls(this.camera, this.renderer.domElement);
+
     const cube = createCube("basic", [2, 0, 0], { color: "purple" });
     cube.name = "Cube1";
     const cube2 = createCube("standard", [-2, 0, 0], { color: "yellow" });
     cube2.name = "Cube2";
+
+    controls.target.set(1, 2, 3);
 
     const light = createLights();
 
